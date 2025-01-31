@@ -46,7 +46,6 @@ async function fetchLatestVideos() {
                 <p><strong>${video.snippet.title}</strong></p>
                 <p>Views: ${videoStats.viewCount}</p>
                 <p>Likes: ${videoStats.likeCount}</p>
-                <p>Dislikes: ${videoStats.dislikeCount}</p>
             `;
             videosContainer.appendChild(videoElement);
         });
