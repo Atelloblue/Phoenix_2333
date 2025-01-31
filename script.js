@@ -32,12 +32,21 @@ async function fetchLatestVideos() {
         const videosContainer = document.getElementById("videos-container");
         videosContainer.innerHTML = "";
 
-        data.items.forEach(video => {
+        const videoIds = data.items.map(video => video.id.videoId).join(",");
+        const videoStatsUrl = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${API_KEY}`;
+        const statsResponse = await fetch(videoStatsUrl);
+        const statsData = await statsResponse.json();
+
+        data.items.forEach((video, index) => {
+            const videoStats = statsData.items[index].statistics;
             const videoElement = document.createElement("div");
             videoElement.classList.add("video");
             videoElement.innerHTML = `
                 <iframe width="300" height="170" src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allowfullscreen></iframe>
-                <p>${video.snippet.title}</p>
+                <p><strong>${video.snippet.title}</strong></p>
+                <p>Views: ${videoStats.viewCount}</p>
+                <p>Likes: ${videoStats.likeCount}</p>
+                <p>Dislikes: ${videoStats.dislikeCount}</p>
             `;
             videosContainer.appendChild(videoElement);
         });
