@@ -1,5 +1,5 @@
 const API_KEY = "AIzaSyC_tPcfatWbHrPxDaTQvCJFd1IvFeqInLA";
-const CHANNEL_USERNAME = "Phoenix_2333";  // Replace with your YouTube custom name (@Phoenix)
+const CHANNEL_USERNAME = "@Phoenix_2333";  // Replace with your YouTube custom name (@Phoenix)
 
 async function getChannelID() {
     const url = `https://www.googleapis.com/youtube/v3/channels?part=id&forUsername=${CHANNEL_USERNAME}&key=${API_KEY}`;
