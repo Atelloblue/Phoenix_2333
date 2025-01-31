@@ -2,15 +2,22 @@ const API_KEY = "AIzaSyC_tPcfatWbHrPxDaTQvCJFd1IvFeqInLA";
 const CHANNEL_ID = "UClBLnfKl_ge5sjLOqbfzhZQ"; // Your actual YouTube channel ID
 
 async function fetchChannelData() {
-    const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,brandingSettings&id=${CHANNEL_ID}&key=${API_KEY}`;
+    const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,brandingSettings&id=${CHANNEL_ID}&key=${API_KEY}`;
     const response = await fetch(channelUrl);
     const data = await response.json();
 
     if (data.items && data.items.length > 0) {
         const channel = data.items[0];
+
+        // Set Banner and Profile Picture
         document.getElementById("banner").src = channel.brandingSettings.image.bannerExternalUrl;
         document.getElementById("profile").src = channel.snippet.thumbnails.high.url;
         document.getElementById("channel-name").innerText = channel.snippet.title;
+        document.getElementById("channel-description").innerText = channel.snippet.description;
+
+        // Set Subscriber & Video Count
+        document.getElementById("subscriber-count").innerText = `Subscribers: ${channel.statistics.subscriberCount}`;
+        document.getElementById("video-count").innerText = `Videos: ${channel.statistics.videoCount}`;
     } else {
         console.error("Failed to fetch channel data");
     }
